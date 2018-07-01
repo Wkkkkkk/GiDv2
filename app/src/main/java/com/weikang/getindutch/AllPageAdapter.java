@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -23,16 +25,23 @@ public class AllPageAdapter extends RecyclerView.Adapter<AllPageAdapter.ViewHold
     //private ArrayList<String> mImages = new ArrayList<>();
     private Context mContext;
 
+    //Firebase uid details
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser mUser = mAuth.getCurrentUser();
+    String mUserId = mUser.getUid();
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         //each dataItem is only just a string, we should create all the views needed here
         //declare all the views needed
-        TextView mTextView;
+        TextView mGroupName;
+        TextView mUserBalance;
         CircleImageView mGroupImage;
         RelativeLayout mParentLayout;
 
         public ViewHolder(View itemView){
             super(itemView);
-            mTextView = itemView.findViewById(R.id.group_name);
+            mGroupName = itemView.findViewById(R.id.group_name);
+            mUserBalance = itemView.findViewById(R.id.user_balance);
             mGroupImage = itemView.findViewById(R.id.group_image);
             mParentLayout = itemView.findViewById(R.id.parent_layout);
         }
@@ -66,12 +75,14 @@ public class AllPageAdapter extends RecyclerView.Adapter<AllPageAdapter.ViewHold
                 .load(mGroups.get(position).getPhotoUrl())
                 .into(holder.mGroupImage);
 
-        holder.mTextView.setText(mGroups.get(position).getName());
+        holder.mGroupName.setText(mGroups.get(position).getName());
+        holder.mUserBalance.setText(mGroups.get(position).getMembers().get(mUserId).toString());
 
         //sets what happens when u click the object
         holder.mParentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
+
                 Toast.makeText(mContext, mGroups.get(position).getName(), Toast.LENGTH_SHORT).show();
             }
         });

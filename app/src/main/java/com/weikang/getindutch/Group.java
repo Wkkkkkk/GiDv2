@@ -6,13 +6,13 @@ public class Group {
 
     private String name;
     private String photoUrl;
-    private HashMap<String, String> members;
+    private HashMap<String, Long> members;
 
     public Group(){
 
     }
 
-    public Group(String name, String photoUrl, HashMap<String, String> members){
+    public Group(String name, String photoUrl, HashMap<String, Long> members){
         this.name = name;
         this.photoUrl = photoUrl;
         this.members = members;
@@ -22,7 +22,7 @@ public class Group {
 
     public String getPhotoUrl(){return photoUrl;}
 
-    public HashMap<String, String> getMembers(){return members;}
+    public HashMap<String, Long> getMembers(){return members;}
 
     public void setName(String name){this.name = name;}
 
